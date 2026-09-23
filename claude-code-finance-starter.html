@@ -1,0 +1,492 @@
+<title>Finance Desk Starter</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #F6F6F3;
+    --surface: #FFFFFF;
+    --sunk: #EFEFEA;
+    --ink: #15181B;
+    --muted: #5B6570;
+    --faint: #8A939C;
+    --rule: #E0E1DC;
+    --accent: #1D5C4C;
+    --accent-ink: #14463A;
+    --accent-wash: #E6F0EC;
+    --flag: #A44A1C;
+    --flag-wash: #F6EAE2;
+    --step: 2.6rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #111417;
+      --surface: #191D21;
+      --sunk: #21262B;
+      --ink: #E7E9E5;
+      --muted: #A2ABB3;
+      --faint: #79838B;
+      --rule: #2C3238;
+      --accent: #74C4A8;
+      --accent-ink: #9AD8C1;
+      --accent-wash: #16302A;
+      --flag: #E39264;
+      --flag-wash: #32231A;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #111417;
+    --surface: #191D21;
+    --sunk: #21262B;
+    --ink: #E7E9E5;
+    --muted: #A2ABB3;
+    --faint: #79838B;
+    --rule: #2C3238;
+    --accent: #74C4A8;
+    --accent-ink: #9AD8C1;
+    --accent-wash: #16302A;
+    --flag: #E39264;
+    --flag-wash: #32231A;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 3rem 5rem;
+  }
+
+  h1, h2, h3, .ui {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.9rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0.6rem 0 0.8rem;
+  }
+  h2 {
+    font-size: 1.32rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0 0 0.5rem;
+  }
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+  }
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+  a { color: var(--accent-ink); }
+
+  .eyebrow {
+    font-family: Archivo, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .standfirst {
+    font-size: 1.14rem;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+  .byline {
+    font-family: Archivo, sans-serif;
+    font-size: 0.8rem;
+    color: var(--faint);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.7rem;
+    margin-top: 2rem;
+  }
+
+  section { margin-top: 3.2rem; }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.4rem;
+  }
+  .sec-head h2 { margin: 0; }
+  .sec-head .n {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--faint);
+    flex: none;
+  }
+
+  /* connected-services list: label/value rows, not cards */
+  .rows { display: grid; gap: 0; }
+  .row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.3rem 1.2rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .row:first-child { border-top: 1px solid var(--rule); }
+  .row dt {
+    font-family: Archivo, sans-serif;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .row dd {
+    margin: 0;
+    font-size: 0.97rem;
+    color: var(--muted);
+  }
+  .tag {
+    display: inline-block;
+    font-family: Archivo, sans-serif;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.14em 0.5em;
+    border-radius: 3px;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+    vertical-align: 0.12em;
+    margin-left: 0.4rem;
+  }
+  .tag.ro { background: var(--flag-wash); color: var(--flag); }
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; }
+  }
+
+  /* numbered sequence — these really are ordered steps */
+  ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.9rem; }
+  ol.steps > li {
+    display: grid;
+    grid-template-columns: var(--step) 1fr;
+    gap: 0 1rem;
+  }
+  ol.steps .num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    padding-top: 0.28rem;
+    border-top: 2px solid var(--accent);
+  }
+  ol.steps .body > p { font-size: 0.99rem; color: var(--muted); }
+  ol.steps .body > h3 { color: var(--ink); }
+  @media (max-width: 560px) {
+    ol.steps > li { grid-template-columns: 1fr; gap: 0.5rem; }
+    ol.steps .num { width: var(--step); }
+  }
+
+  /* prompt block */
+  .prompt {
+    background: var(--sunk);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 5px 5px 0;
+    padding: 0.85rem 1rem;
+    margin: 0.8rem 0 0;
+    position: relative;
+  }
+  .prompt pre {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    padding-right: 3.6rem;
+  }
+  .copy {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    font-family: Archivo, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.22em 0.5em;
+    cursor: pointer;
+  }
+  .copy:hover { color: var(--accent-ink); border-color: var(--accent); }
+  .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* the flagship play */
+  .play {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 1.5rem 1.4rem;
+  }
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    margin: 1.1rem 0 1.2rem;
+    padding: 0;
+    list-style: none;
+  }
+  .pipeline li {
+    font-family: Archivo, sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+    padding: 0.3em 0.62em;
+    border-radius: 3px;
+  }
+  .pipeline .arrow {
+    background: none;
+    color: var(--faint);
+    font-weight: 400;
+    padding: 0;
+  }
+
+  ul.plain { padding-left: 1.1rem; margin: 0 0 1rem; }
+  ul.plain li { margin-bottom: 0.45rem; font-size: 0.99rem; color: var(--muted); }
+  ul.plain li strong { color: var(--ink); font-weight: 600; }
+
+  .cmd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.86em;
+    background: var(--sunk);
+    padding: 0.1em 0.36em;
+    border-radius: 3px;
+  }
+
+  .note {
+    background: var(--flag-wash);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+    font-size: 0.95rem;
+  }
+  .note strong { font-family: Archivo, sans-serif; font-size: 0.9rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">Claude Code · Getting started</span>
+    <h1>Finance Desk Starter</h1>
+    <p class="standfirst">A working guide for Christopher Teo, Head of Finance – Australia. Written against what is actually connected to this account, not a generic feature tour.</p>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="n">01</span><h2>The mental shift</h2></div>
+    <p>You already know how to ask a chatbot a question. The difference here is that Claude Code has <em>hands</em>. It reads and writes files, runs code, queries databases, reads your Outlook and SharePoint, and produces finished <span class="cmd">.xlsx</span>, <span class="cmd">.docx</span>, <span class="cmd">.pptx</span> and <span class="cmd">.pdf</span> files.</p>
+    <p>So stop asking it <em>"how would I reconcile client money?"</em> and start asking it <em>"reconcile this."</em> The useful prompt names three things: the <strong>goal</strong>, the <strong>source</strong> of truth, and the <strong>shape of the output</strong>.</p>
+    <div class="prompt">
+      <button class="copy" type="button">Copy</button>
+      <pre>Goal:   reconcile the AU client money balance for August
+Source: the segregation summary emails + the GL extract in SharePoint
+Output: an xlsx with live formulas, one tab per entity, variances flagged</pre>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">02</span><h2>What you already have plugged in</h2></div>
+    <dl class="rows">
+      <div class="row">
+        <dt>Microsoft 365 <span class="tag ro">Read only</span></dt>
+        <dd>Outlook mail, calendar, Teams messages, SharePoint and OneDrive files. It can search and read across all of it. It <em>cannot</em> send mail, reply, accept invitations or edit a SharePoint file — every granted scope is a read scope.</dd>
+      </div>
+      <div class="row">
+        <dt>BigQuery</dt>
+        <dd>Ask for figures in English; it writes and runs the SQL, then explains what it found. Prefer read-only queries unless you explicitly say otherwise.</dd>
+      </div>
+      <div class="row">
+        <dt>GitHub</dt>
+        <dd>Version control for anything you want an audit trail on — model logic, reconciliation scripts, the wording of a recurring paper.</dd>
+      </div>
+      <div class="row">
+        <dt>Document skills</dt>
+        <dd>Excel, Word, PowerPoint and PDF handling. Real files with real formulas, not screenshots of tables.</dd>
+      </div>
+      <div class="row">
+        <dt>Your own skills</dt>
+        <dd>Three are already installed and tuned to your role. Type <span class="cmd">/</span> to see them.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">03</span><h2>Your three installed skills</h2></div>
+    <p>A skill is a saved playbook — house rules Claude follows every time, so you never re-explain the format. Invoke one by name with a slash, or just describe the task and it will pick the right one up.</p>
+    <dl class="rows">
+      <div class="row">
+        <dt><span class="cmd">/ct-writing</span></dt>
+        <dd>Drafts and reviews in your voice — CMAC and board papers, ASIC / FMA / ATO submissions, adviser correspondence to EY, PwC, BDO, HNL and Cygnus Law. Runs the PIP framework and a pre-send checklist. Paste in your own draft and ask for a redline.</dd>
+      </div>
+      <div class="row">
+        <dt><span class="cmd">/apac-daily-cash-segregation</span></dt>
+        <dd>Pulls the segregation summary table out of the approved IGAU &amp; NZ daily cash report email for any date. Ask for a date, get the table.</dd>
+      </div>
+      <div class="row">
+        <dt><span class="cmd">/ig-comp-analysis</span></dt>
+        <dd>Full investment thesis on a company or transaction — Five Forces against size-matched peers, forecast stress-testing, peer multiples, moat and earnings-durability scoring, bull / base / bear. Delivers a Word thesis plus an Excel audit workbook of live formulas.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">04</span><h2>Your first twenty minutes</h2></div>
+    <ol class="steps">
+      <li>
+        <span class="num">01</span>
+        <div class="body">
+          <h3>Prove the mailbox connection</h3>
+          <p>Low stakes, read-only, and it shows you the connector working end to end.</p>
+          <div class="prompt">
+            <button class="copy" type="button">Copy</button>
+            <pre>Run /apac-daily-cash-segregation for yesterday.</pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div class="body">
+          <h3>Make it produce a real file</h3>
+          <p>This is the moment most people's mental model updates — a spreadsheet lands, with formulas in the cells rather than hardcoded values.</p>
+          <div class="prompt">
+            <button class="copy" type="button">Copy</button>
+            <pre>Find the last 10 business days of segregation summaries in my mail
+and build me an xlsx: date down the rows, entity across the columns,
+surplus/deficit calculated by formula, and a line chart of the AU trend.</pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div class="body">
+          <h3>Point it at something you actually dread</h3>
+          <p>Pick the task you'd hand to a junior if you had one. Be specific about the output — "a two-page Word memo", "a 6-slide deck", "an email I can paste into Outlook".</p>
+          <div class="prompt">
+            <button class="copy" type="button">Copy</button>
+            <pre>Read the last three CMAC papers I wrote in SharePoint, then draft the
+Q3 one using the same structure. Flag every figure you couldn't source
+rather than estimating it.</pre>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div class="body">
+          <h3>Correct it out loud</h3>
+          <p>Don't restart the conversation when the output is 80% right. Say what's wrong — "the variance column should be signed the other way", "too formal for BDO", "drop the exec summary". It keeps all the context and reworks it.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">05</span><h2>The play worth getting excited about</h2></div>
+    <div class="play">
+      <span class="eyebrow">Standing instruction</span>
+      <h2 style="margin-top:0.35rem">Turn the recurring close into something that runs itself</h2>
+      <p>Everything above still needs you to ask. The real unlock is a <strong>Routine</strong> — a scheduled instruction that wakes Claude up on its own, does the work, and has the result waiting for you.</p>
+      <ul class="pipeline">
+        <li>Read the overnight report</li>
+        <li class="arrow">→</li>
+        <li>Extract the table</li>
+        <li class="arrow">→</li>
+        <li>Compare to yesterday</li>
+        <li class="arrow">→</li>
+        <li>Flag the breaches</li>
+        <li class="arrow">→</li>
+        <li>Draft the email</li>
+      </ul>
+      <p>Set it once and the daily cash segregation position is reviewed, trended and written up before you open your laptop. You read and send — the judgement stays with you, the assembly doesn't.</p>
+      <div class="prompt">
+        <button class="copy" type="button">Copy</button>
+        <pre>Set up a Routine for 7:00am Sydney time, weekdays.
+
+Each morning: pull the segregation summary from the approved IGAU & NZ
+daily cash report, compare every entity against the prior business day,
+flag any movement over 5% or any entity in deficit, and draft a short
+note in my voice for the Finance team. If the report hasn't landed yet,
+say so rather than using stale figures.</pre>
+      </div>
+      <p style="margin-top:1.1rem">The same pattern fits the rest of the calendar: a Monday pipeline of month-end close tasks, a weekly regulatory-deadline sweep, a quarterly prompt to refresh the peer multiples in a live thesis.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">06</span><h2>Habits that separate good output from great</h2></div>
+    <ul class="plain">
+      <li><strong>Name the source, always.</strong> "From the GL extract" beats "from what you know". Left unsourced, it will reason from general knowledge — which is exactly what you don't want in a regulatory submission.</li>
+      <li><strong>Ask it to flag rather than fill.</strong> "Mark anything you couldn't verify" turns a plausible-looking number into an explicit gap you can go and close.</li>
+      <li><strong>Make it show the arithmetic.</strong> Formulas in the spreadsheet, not values. Then the workbook is auditable by someone who wasn't in the conversation.</li>
+      <li><strong>Use plan mode for anything material.</strong> Ask for the approach before the execution, approve it, then let it run. Cheaper than rereading 40 pages of the wrong thing.</li>
+      <li><strong>One conversation per workstream.</strong> Context is an asset — a long-running close thread gets sharper as it goes. Start fresh only when the subject genuinely changes.</li>
+      <li><strong>Turn any repeated correction into a skill.</strong> The third time you give the same instruction, say <em>"make this a skill"</em>. That's exactly how the three above came to exist.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">07</span><h2>Where the edges are</h2></div>
+    <div class="note">
+      <p><strong>It can read your mail. It cannot send it.</strong> Every Microsoft 365 permission on this account is read-only, so nothing leaves your mailbox without you pressing send. Drafts come back to you as text or a file.</p>
+      <p style="margin-bottom:0">Two things still need your eyes: <strong>figures</strong> — spot-check the arithmetic against source on anything going to a regulator, an auditor or a board — and <strong>anything irreversible</strong>, which you'll always be asked to approve first. It will tell you when it couldn't verify something, but only if you've asked it to.</p>
+    </div>
+  </section>
+
+  <p class="byline">Prepared for Christopher Teo · Head of Finance, Australia and Greater China · reflects the connectors, skills and permissions live on this account</p>
+
+</div>
+
+<script>
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pre = btn.parentElement.querySelector("pre");
+      if (!pre) return;
+      var done = function () {
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+      };
+      try {
+        navigator.clipboard.writeText(pre.textContent).then(done, function () {
+          selectText(pre);
+        });
+      } catch (e) {
+        selectText(pre);
+      }
+    });
+  });
+
+  function selectText(node) {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(node);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch (e) { /* nothing more we can do */ }
+  }
+</script>
