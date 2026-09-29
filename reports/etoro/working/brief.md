@@ -8,3 +8,9 @@
 - Timetable check (today 2026-09-29): no user-stated timetable. TradeZero close guided H1 2027 (not yet passed). IG strategic review "outcomes autumn 2026" already concluded 30 Jul 2026 (Underdog deal). ASIC v eToro (filed Aug/Nov 2023) - no outcome found: N/D.
 - Research constraint: WebFetch is blocked by the egress proxy for every domain tried (investors.etoro.com, sec.gov, globenewswire, stocktitan, wikipedia). All figures come from WebSearch result summaries of the cited URLs, so every figure is graded one notch lower than primary. Stage 2 must re-verify key numbers against primary filings if access is available.
 - Tooling for Stage 2: python-docx/openpyxl NOT installed (pip install needed); LibreOffice present at /usr/bin/soffice. Prefer anthropic-skills:docx / :xlsx.
+
+## Stage 2 (confirmed 2026-09-29)
+- Peer set: IG Group (conflict flagged), Plus500, Webull, XTB, Trading 212, Swissquote.
+- Growth matrix: Webull, XTB, Trading 212 (IG excluded).
+- M&A cross-checks: IG/Freetrade, J. Safra Sarasin/Saxo (not benchmark rows).
+- Tooling note: LibreOffice Calc/Writer were missing and were installed via apt so the recalc could run.
